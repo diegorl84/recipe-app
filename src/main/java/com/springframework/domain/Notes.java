@@ -4,13 +4,16 @@ package com.springframework.domain;
 
 import lombok.*;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
  * @author diego
  * @since 31/12/2019
  */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes  {
@@ -24,5 +27,7 @@ public class Notes  {
 
     @Lob
     private String recipeNotes;
+    
+    
 
 }

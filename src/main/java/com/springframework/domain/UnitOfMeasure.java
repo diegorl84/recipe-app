@@ -2,13 +2,16 @@ package com.springframework.domain;
 
 import lombok.*;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
  * @author diego
  * @since 06/01/2020
  */
-@Data
+@Getter
+@Setter
 @Entity
 public class UnitOfMeasure {
 

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,8 +60,15 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Category americanCategory = americanCategoryOptional.get();
 
+        Optional<Category> italianCategoryOption = categoryRepository.findByDescription("Italian");
+        if(!italianCategoryOption.isPresent()) {
+            throw new RuntimeException("Expected Category not found");
+        }
+
+        Category italianCategory = italianCategoryOption.get();
+
         Recipe guacRecipe = new Recipe();
-        guacRecipe.setDescription("Guacamole");
+        guacRecipe.setDescription("Guacamole Recipe");
         guacRecipe.setPrepTime(10);
         guacRecipe.setCookTime(0);
         guacRecipe.setDifficulty(Difficulty.EASY);
@@ -70,9 +78,11 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacNotes.setRecipeNotes("Guac notes");
         guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
+        guacRecipe.setServings(10);
 
-        guacRecipe.getIngredients().add(new Ingredient("Ripe avocados",new BigDecimal(2),eachUom));
+        guacRecipe.addIngredient(new Ingredient("Ripe avocados",new BigDecimal(2),eachUom));
         guacRecipe.getCategories().add(americanCategory);
+        guacRecipe.getCategories().add(italianCategory);
 
         recipes.add(guacRecipe);
         return recipes;
